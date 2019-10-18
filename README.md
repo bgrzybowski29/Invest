@@ -1,8 +1,8 @@
-#Project Overview
+# Project Overview
 ### Project Description
 This is an investment research app. You can look uop a company by stock ticker and get a stock quote, dividend information, company information current company news.
 
-###API
+### API
 https://iexcloud.io/
 
 ### Wireframes
