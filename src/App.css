@@ -1,3 +1,10 @@
+@import url('<link href="https://fonts.googleapis.com/css?family=Michroma&display=swap" rel="stylesheet">');
+@import url('<link href="https://fonts.googleapis.com/css?family=Hammersmith+One&display=swap" rel="stylesheet">');
+
+/* font-family: 'Hammersmith One', sans-serif; */
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
 html,
 body,
 .app {
@@ -20,6 +27,7 @@ form{
     display: flex;
     align-items: center;
     background-color: white;
+    height: 50px;
 }
 input[type=image]{
     
@@ -34,25 +42,33 @@ input[type=text]{
   padding-left: 20px;
   font-size: 25px;
 }
+input[type=text]:focus, input:focus{
+  outline: none;
+}
 header {
   flex-shrink: 0;
   display: grid;
-  /* grid-template-columns: 10% 70% 10% 10%; */
+  font-family: 'Michroma', sans-serif;
   display: inline-flex;
   background-color: white;
   right:0;
   left:0;
   padding-left: 10%;
-  /* text-align: center; */
+  margin-top: 0;
 }
 nav{
   padding-right: 10%;
   display: flex;
   flex-direction: column;
-  padding-top: 22px;
+  padding-top: 60px;
+}
+nav a{
+  color: black;
+  text-decoration: none;
 }
 header h1{
   width: 100vw;
+  font-size: 4em;
 }
 
 #main {
@@ -102,7 +118,7 @@ footer {
   padding:20px; 
   width:200px; 
   height:180px; 
-  background-color: #deddcd; 
+  background-color: #B7C7C6; 
   margin:-195px 0 0 55px;/*  will move side or bottom*/
   position:absolute;
   box-shadow: 0 20px 40px #888; 
@@ -117,7 +133,7 @@ footer {
   margin:-175px 0 0 30px;
 }
 .company-info h3 { 
-  color:#7a3f3a; 
+  color:black; 
   font-variant: small-caps; 
   font-family:Georgia,serif,Times; 
   text-align:center; 
@@ -129,7 +145,7 @@ footer {
   padding-bottom:15px; 
 }
 .company-info a { 
-  background-color:#7a3f3a; 
+  background-color:black; 
   padding:5px 10px; 
   color:#eee; 
   text-decoration:none; 

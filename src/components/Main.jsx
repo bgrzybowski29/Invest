@@ -9,9 +9,6 @@ export default function Main(props) {
 
   return (
     <main id="main">
-      
-     
-  
       <Company
         companies={props.companies}
         handleRemove={props.handleRemove}

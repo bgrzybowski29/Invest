@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { getStockQuote, getLogo, getDividends, getCompanyData, getNews, getFinancials } from './services/api-helper';
+import { getSymbols, getStockQuote, getLogo, getDividends, getCompanyData, getNews, getFinancials } from './services/api-helper';
 import Main from './components/Main';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -12,30 +12,47 @@ class App extends React.Component {
     super(props);
     this.state = {
       companies: [],
-      ticker: "",
+      symbol: "",
       quoteData: "",
       dividendsData: "",
       logo: "",
       companyData: "",
       newsData: "",
+      symbols: [],
+      filteredSymbols: [],
     }
   }
   handleChange = (event) => {
-    console.log(event.target.value);
+    let coName = event.target.value;
+    let coSymbol = event.target.value;
+    if (event.target.value.length > 2) {
+      const startpos = event.target.value.indexOf("-");
+      if (startpos > 0) {
+        coName = event.target.value.substring(0, startpos);
+        coSymbol = event.target.value.substring(startpos + 1, event.target.value.length);
+      }
+      const filteredSymbols = this.state.symbols.filter(
+        key => key.name.toUpperCase().indexOf(coName.toUpperCase()) === 0);
+      this.setState({ filteredSymbols })
+    }
+
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: coSymbol
     })
   }
   handleRemove = (event) => {
-    const result = this.state.companies.filter(co => co.ticker != event.target.name);
+    const result = this.state.companies.filter(co => co.symbol != event.target.name);
     this.setState({ companies: result });
   }
+  componentDidMount = async () => {
+    const symbols = await getSymbols();
+    this.setState({ symbols });
+  }
   getCompanyData = async (event) => {
-    const coTicker = event.target.name;
-    const dividends = await getDividends(coTicker);
-    const company = await getCompanyData(coTicker);
-    const news = await getNews(coTicker);
-
+    const coSymbol = event.target.name;
+    const dividends = await getDividends(coSymbol);
+    const company = await getCompanyData(coSymbol);
+    const news = await getNews(coSymbol);
     // let quoteData = JSON.stringify(quote);
     let companyData = JSON.stringify(company);
     let dividendsData = JSON.stringify(dividends);
@@ -43,22 +60,23 @@ class App extends React.Component {
 
     this.setState({ dividendsData, companyData, newsData });
   }
+
   handleSubmit = async (event) => {
     event.preventDefault();
-    const quote = await getStockQuote(this.state.ticker);
-    const logo = await getLogo(this.state.ticker);
+    const coSymbol = this.state.symbol;
+    const quote = await getStockQuote(coSymbol);
+    const logo = await getLogo(coSymbol);
     const company = {
       name: quote.companyName,
-      ticker: quote.symbol,
+      symbol: quote.symbol,
       price: quote.latestPrice,
       change: quote.change,
       logo: logo
     }
     const co = this.state.companies;
     co.push(company);
-    this.setState({ companies: co, ticker: "" });
+    this.setState({ companies: co, symbol: "" });
   }
-
 
   render() {
     return (
@@ -68,7 +86,8 @@ class App extends React.Component {
         <Form
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
-          ticker={this.state.ticker}
+          symbol={this.state.symbol}
+          symbols={this.state.filteredSymbols}
         />
         <hr />
         <Main
@@ -82,7 +101,7 @@ class App extends React.Component {
           companies={this.state.companies}
           handleRemove={this.handleRemove}
           getCompanyData={this.getCompanyData}
-          ticker={this.state.ticker}
+          symbol={this.state.symbol}
         />
         <Footer />
       </div>

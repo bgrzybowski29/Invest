@@ -1,5 +1,6 @@
 import axios from 'axios';
 // const baseUrl = `https://cloud.iexapis.com/stable/`;
+//https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=sony&apikey=55X1URWO4KSROPDF
 
 export const getStockQuote = async (ticker) => {
   // const url = `https://cloud.iexapis.com/stable/tops?token=pk_210068cb77984edcac835b9f829e946d&symbols=PRU`;
@@ -27,6 +28,11 @@ export const getCompanyData = async (ticker) => {
 }
 export const getNews = async (ticker) => {
   const url = `https://cloud.iexapis.com/stable/stock/${ticker}/news/last/5?token=pk_210068cb77984edcac835b9f829e946d`;
+  const resp = await axios.get(url);
+  return resp.data;
+}
+export const getSymbols = async () => {
+  const url = `https://cloud.iexapis.com/stable/ref-data/symbols?token=pk_210068cb77984edcac835b9f829e946d`;
   const resp = await axios.get(url);
   return resp.data;
 }
