@@ -67,6 +67,8 @@ nav a{
 header h1{
   width: 100vw;
   font-size: 4em;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #main {
