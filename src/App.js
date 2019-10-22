@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import { getSymbols, getStockQuote, getLogo, getDividends, getCompanyData, getNews, getFinancials } from './services/api-helper';
-import Main from './components/Main';
+import { getSymbols, getStockQuote, getLogo, getDividends, getCompanyData, getNews } from './services/api-helper';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Company from './components/Company';
-import Form from './components/Form';
+import { Route } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,11 +20,13 @@ class App extends React.Component {
       newsData: "",
       symbols: [],
       filteredSymbols: [],
+      coName: "",
     }
   }
   handleChange = (event) => {
     let coName = event.target.value;
-    let coSymbol = event.target.value;
+    let coSymbol = event.target.attributes["symbol"].value;
+
     if (event.target.value.length > 2) {
       const startpos = event.target.value.indexOf("-");
       if (startpos > 0) {
@@ -35,30 +37,28 @@ class App extends React.Component {
         key => key.name.toUpperCase().indexOf(coName.toUpperCase()) === 0);
       this.setState({ filteredSymbols })
     }
-
     this.setState({
-      [event.target.name]: coSymbol
+      [event.target.name]: coSymbol, coName
     })
+    console.log("handleChange CoName=" + this.state.coName);
   }
   handleRemove = (event) => {
-    const result = this.state.companies.filter(co => co.symbol != event.target.name);
+    const result = this.state.companies.filter(co => co.symbol !== event.target.name);
     this.setState({ companies: result });
   }
+
   componentDidMount = async () => {
     const symbols = await getSymbols();
     this.setState({ symbols });
   }
-  getCompanyData = async (event) => {
-    const coSymbol = event.target.name;
-    const dividends = await getDividends(coSymbol);
-    const company = await getCompanyData(coSymbol);
-    const news = await getNews(coSymbol);
-    // let quoteData = JSON.stringify(quote);
-    let companyData = JSON.stringify(company);
-    let dividendsData = JSON.stringify(dividends);
-    let newsData = JSON.stringify(news);
 
-    this.setState({ dividendsData, companyData, newsData });
+  getCompanyData = async (event) => {
+    const result = this.state.companies.filter(co => co.symbol === event.target.name);
+    const coSymbol = event.target.name;
+    const dividendsData = await getDividends(coSymbol);
+    const companyData = await getCompanyData(coSymbol);
+    const newsData = await getNews(coSymbol);
+    this.setState({ dividendsData, companyData, newsData, logo: result[0].logo });
   }
 
   handleSubmit = async (event) => {
@@ -75,34 +75,29 @@ class App extends React.Component {
     }
     const co = this.state.companies;
     co.push(company);
-    this.setState({ companies: co, symbol: "" });
+    this.setState({ companies: co, symbol: "", coName: "", filteredSymbols: [] });
+    document.querySelector("#form-input").value = "";
   }
 
   render() {
     return (
       <div className="app" >
         <Header />
-        <hr />
-        <Form
+        <Route exact path="/" render={() => (<Home
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
-          symbol={this.state.symbol}
-          symbols={this.state.filteredSymbols}
-        />
-        <hr />
-        <Main
-          quoteData={this.state.quoteData}
-          dividendsData={this.state.dividendsData}
-          logo={this.state.logo}
-          companyData={this.state.companyData}
-          newsData={this.state.newsData}
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          companies={this.state.companies}
           handleRemove={this.handleRemove}
           getCompanyData={this.getCompanyData}
           symbol={this.state.symbol}
-        />
+          symbols={this.state.filteredSymbols}
+          quoteData={this.state.quoteData}
+          dividendsData={this.state.dividendsData}
+          companyData={this.state.companyData}
+          newsData={this.state.newsData}
+          companies={this.state.companies}
+          logo={this.state.logo}
+        />)} />
+        <Route path="/about" render={() => (<About />)} />
         <Footer />
       </div>
     );

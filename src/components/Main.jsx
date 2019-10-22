@@ -1,29 +1,37 @@
 import React from 'react';
 import Company from './Company';
-import Dividend from './Dividend';
-import Logo from './Logo';
-import News from './News';
-import Quote from './Quote';
 
-export default function Main(props) {
-
-  return (
-    <main id="main">
-      <Company
-        companies={props.companies}
-        handleRemove={props.handleRemove}
-        quoteData={props.quoteData}
-        dividendsData={props.dividendsData}
-        newsData={props.newsData}
-        companyData={props.companyData}
-        getCompanyData={props.getCompanyData}
-      />
-      {/* <Logo logo={props.logo} />
-      <Quote quoteData={props.quoteData} />
-      <Dividend dividendsData={props.dividendsData} />
-      <Company companyData={props.companyData} />
-      <News newsData={props.newsData} /> */}
-    </main>
-  )
+class Main extends React.Component {
+  
+  componentDidUpdate = () => {
+    if (this.props.companies.length > 0) {
+      const hh = document.querySelector("#hh");
+      const main = document.querySelector("#main");
+      if (hh !== null) document.querySelector("#hh").style.display = "none";
+      if (main !== null) {
+        document.querySelector("#main").style.backgroundSize = "100% 100%";
+        document.querySelector("#main").style.justifyContent = "flex-start";
+      }
+    }
+  }
+  render() {
+    return (
+      <main id="main">
+        <div id="hh">
+          Welcome to <b>Invest</b> your destination for investment research. Get real-time quotes , financials, news and compay information.
+      </div>
+        <Company
+          companies={this.props.companies}
+          handleRemove={this.props.handleRemove}
+          quoteData={this.props.quoteData}
+          dividendsData={this.props.dividendsData}
+          newsData={this.props.newsData}
+          companyData={this.props.companyData}
+          getCompanyData={this.props.getCompanyData}
+          logo={this.props.logo}
+        />
+      </main >
+    )
+  }
 }
-
+export default Main;

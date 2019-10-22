@@ -1,13 +1,13 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 export default function Header(props) {
 
   return (
     <header>
       <h1>Invest</h1>
       <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
       </nav>
     </header>
   )
