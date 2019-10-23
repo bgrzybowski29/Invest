@@ -325,4 +325,29 @@ footer {
       flex-grow: inherit;
       padding-left: 30px;
     }
+    #co-details{
+      display: grid;
+      grid-template-columns: 40% 60%;
+      grid-template-areas: 
+      "contact dividends"
+      "news news";
+    }
+    #co-contact{
+      margin-left: 3vw;
+      grid-area: contact;
+    }
+    #dividends{
+      margin-left: 1vw;
+      grid-area: dividends;
+    }
+    #news{
+      margin-left: 1vw;
+      grid-area: news;
+    }
+    #co-data img {
+      height: 10vh;
+    }
+    input[type=text] {
+      width: 260px;
+    }
   }
