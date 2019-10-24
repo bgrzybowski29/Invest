@@ -60,6 +60,6 @@ Dividends | Med | 2hrs | .5hr
 News | Med | 2hrs | .5hr
 App.js | High | 10hrs | 10hrs
 
-###Issues and Resolutions
+### Issues and Resolutions
 * Changing style of elements at runtime. I first used the dom to manipulate the style and ran into issues. I got it to work, but it was bad design. I ended up creating a style object and used conditional rendering.
 * Issue retrieve from local storage.  I was doing a check if the object in local storage was 'undefined', but did not use the "typeof".
