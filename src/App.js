@@ -64,6 +64,8 @@ class App extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const coSymbol = this.state.symbol;
+    if (coSymbol === "")
+      return;
     const quote = await getStockQuote(coSymbol);
     const logo = await getLogo(coSymbol);
     const company = {

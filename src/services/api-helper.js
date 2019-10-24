@@ -27,7 +27,7 @@ export const getNews = async (ticker) => {
 }
 export const getSymbols = async () => {
   if (typeof (Storage) !== "undefined") {
-    if (localStorage.symbols !== "undefined") {
+    if (typeof localStorage.symbols !== "undefined") {
       return JSON.parse(localStorage.symbols);
     } else {
       const resp = await getSymbolsInternal();
