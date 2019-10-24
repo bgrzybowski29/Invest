@@ -40,7 +40,6 @@ class App extends React.Component {
     this.setState({
       [event.target.name]: coSymbol, coName
     })
-    console.log("handleChange CoName=" + this.state.coName);
   }
   handleRemove = (event) => {
     const result = this.state.companies.filter(co => co.symbol !== event.target.name);
