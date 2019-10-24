@@ -50,7 +50,6 @@ class App extends React.Component {
     const symbols = await getSymbols();
     this.setState({ symbols });
   }
-
   getCompanyData = async (event) => {
     const result = this.state.companies.filter(co => co.symbol === event.target.name);
     const coSymbol = event.target.name;
