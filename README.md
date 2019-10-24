@@ -1,6 +1,6 @@
-# Project Overview
+# "Invest" Project Overview ![](images.png)
 ### Project Description
-This is an investment research app. You can look uop a company by stock ticker and get a stock quote, dividend information, company information current company news.
+This is an investment research app. You can look up a company and get a stock quote, dividend information, company information current company news.
 
 ### API
 https://iexcloud.io/
@@ -9,43 +9,57 @@ https://iexcloud.io/
 ![](Project2_wireframe.png)
 
 
-### MVP/PostMVP - 5min
 #### MVP
 * User can enter a stock ticker
 * 5 apis will be called
 * Quote and image will be displayed and can link to additional info
-* User clicks more info and new, company info and financials are displayed.
+* User clicks more info and new, company info and financials are displayed.   
 
-Functional Components
-Writing out your components and its descriptions isn't a required part of the proposal but can be helpful.
-Based on the initial logic defined in the previous sections try and breakdown the logic further into stateless/stateful components.
+#### POST MVP
+* Styled the image and company card with a transform to rotate 30° by default and rotating back on hover. This make the card and image move when hovered over.
+* Added a filtered autocomplete text search for company name. This allowas the user to quickly find the company and does not require them to know the stock symbol.
+* Added a parallax help page.
+* Added a full page overlay to display Co details, dividends, contact info and news. 
+* Added local storage for the initial list of companies. This was making an api call and returning 10K companies each time the app loaded. I changed this to use local storage to cache the list.
 
-Component	Description
-Header	This will render the header include the nav
-Footer	This will render the header include the nav
-Time frames are also key in the development cycle. You have limited time to code all phases of the game. Your estimates can then be used to evalute game possibilities based on time needed and the actual time you have before game must be submitted. It's always best to pad the time by a few hours so that you account for the unknown so add and additional hour or two to each component to play it safe. Also, put a gif at the top of your Readme before you pitch, and you'll get a panda prize.
+#### Functional Components
+* Header
+	* Home
+		* Form
+			* Options
+		* Main
+			* Company
+				* CompanyDetails
+					* Dividends
+					* News  
+* Footer
 
-Component	Priority	Estimated Time	Time Invetsted	Actual Time
-Adding Form	H	3hrs	3.5hrs	3.5hrs
-Working with API	H	3hrs	2.5hrs	2.5hrs
-Total	H	6hrs	5hrs	5hrs
-Helper Functions
-Helper functions should be generic enought that they can be reused in other applications. Use this section to document all helper functions that fall into this category.
+### Component	Description
+**Header** - This will render the header include the nav.  
+**Footer** -	This will render the header include the nav.  
+**Home** - This will render the Form and main.   
+**Form** - This will render the search and options.  
+**Options** - This will render the filtered autocomplete options.   
+**Main** - This will render the company.   
+**Company** - This will render the company card(s) and image(s).   
+**CompanyDetails** - This will render the Company Information(description), image, dividend information, news and address.   
+**Dividends** - This will render dividends.   
+**News** - This will render news.   
 
-Function	Description
-Capitalize	This will capitalize the first letter in a string of text
-Additional Libraries
-Use this section to list all supporting libraries and thier role in the project.
+Component  | Priority | Estimated Time | Time Invetsted
+---------- | -------- | -------------- | --------------
+Header  | Low | 1hr  | .5hrs
+Footer | Low | 1hr | .5hrs
+Home | Med | 2hrs | 1hr
+Form | High | 1hrs | 1hrs
+Options | Low | 1hrs | 1hrs
+Main | High | 2hrs | .5hrs
+Company | High | 2hrs | 1hr
+CompanyDetails | High | 2hrs | 1hr
+Dividends | Med | 2hrs | .5hr
+News | Med | 2hrs | .5hr
+App.js | High | 10hrs | 10hrs
 
-Code Snippet
-Use this section to include a brief code snippet of functionality that you are proud of an a brief description
-
-function reverse(string) {
-	// here is the code to reverse a string of text
-}
-Issues and Resolutions
-Use this section to list of all major issues encountered and their resolution.
-
-SAMPLE.....
-ERROR: app.js:34 Uncaught SyntaxError: Unexpected identifier
-RESOLUTION: Missing comma after first object in sources {} object
+###Issues and Resolutions
+* Changing style of elements at runtime. I first used the dom to manipulate the style and ran into issues. I got it to work, but it was bad design. I ended up creating a style object and used conditional rendering.
+* Issue retrieve from local storage.  I was doing a check if the object in local storage was 'undefined', but did not use the "typeof".
